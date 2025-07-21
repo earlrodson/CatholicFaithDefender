@@ -1,0 +1,18 @@
+Catholic Faith Defender App
+A comprehensive mobile application for Catholics to access essential religious resources offline through a clean, intuitive interface with four main sections accessible via bottom navigation.
+* Bottom navigation with four tabs: Q&A, Prayers, Documents, and Bible
+* Offline functionality using SQLite database to store all content locally
+* Clean, reverent UI with Catholic aesthetic (muted colors, traditional iconography)
+* Search functionality across all sections
+* Ability to bookmark favorite content in each section
+Sample Q&A Content for SQLite Database:
+1. Question: What is the Catholic teaching on the Eucharist? Answer: Catholics believe in the Real Presence—that during the Mass, the bread and wine become the actual Body and Blood of Christ (transubstantiation), while maintaining their physical appearances.
+2. Question: Why do Catholics pray to saints? Answer: Catholics don't worship saints but ask them to intercede with God on their behalf, similar to asking a friend to pray for them. Saints are believed to be closer to God in heaven.
+3. Question: What is the Immaculate Conception? Answer: The Immaculate Conception refers to Mary being conceived without original sin, not Jesus' conception. This doctrine states Mary was preserved from original sin from the moment of her conception.
+4. Question: Why do Catholics confess to priests? Answer: Catholics believe Jesus gave the Apostles authority to forgive sins (John 20:23), which was passed to their successors (bishops and priests). The priest acts in persona Christi (in the person of Christ).
+5. Question: What is Purgatory? Answer: Purgatory is a state of purification where souls destined for Heaven are cleansed of the temporal effects of sin before entering God's presence. It's not a second chance but a final preparation.
+6. Question: Why isn't the Bible alone sufficient for Catholic teaching? Answer: Catholics believe in both Scripture and Tradition as authoritative. The Bible itself doesn't claim to be the sole authority, and the early Church relied on oral tradition before the New Testament was compiled.
+7. Question: Why do Catholics baptize infants? Answer: Catholics baptize infants to cleanse them of original sin and make them members of God's family. This practice has roots in early Christianity and is supported by Acts 16:15, 33 where entire households were baptized.
+8. Question: What is the Catholic view on salvation? Answer: Catholics believe salvation comes through God's grace, received through faith and expressed in good works. It's not earned but requires cooperation with grace through faith, sacraments, and charity.
+9. Question: Why do Catholics use statues and images in worship? Answer: Catholics don't worship statues but use them as visual reminders of holy people and events, similar to keeping family photos. This practice distinguishes between veneration (respect) and worship (reserved for God alone).
+10. Question: What is the significance of the Rosary? Answer: The Rosary is a meditative prayer focused on the life of Christ through Mary's perspective. It consists of specific prayers while contemplating Mysteries (events) from Jesus' life, death, and resurrection.
