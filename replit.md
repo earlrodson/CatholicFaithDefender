@@ -20,9 +20,10 @@ Preferred communication style: Simple, everyday language.
 
 ### Backend Architecture
 - **Runtime**: Node.js with Express server
-- **Database**: PostgreSQL with Drizzle ORM
-- **Database Provider**: Neon Database (serverless PostgreSQL)
+- **Database**: PostgreSQL with Drizzle ORM (DatabaseStorage implementation)
+- **Database Provider**: Replit PostgreSQL (configured with environment variables)
 - **API Design**: RESTful endpoints for CRUD operations
+- **Data Storage**: Migrated from MemStorage to DatabaseStorage for persistent data
 - **Build System**: ESBuild for production bundling
 
 ### Progressive Web App Features

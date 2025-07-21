@@ -15,6 +15,8 @@ import {
   type Bookmark,
   type InsertBookmark,
 } from "@shared/schema";
+import { db } from "./db";
+import { eq, ilike, or, and } from "drizzle-orm";
 
 export interface IStorage {
   // QA Questions
@@ -400,4 +402,184 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  // QA Questions
+  async getQAQuestions(): Promise<QAQuestion[]> {
+    return await db.select().from(qaQuestions);
+  }
+
+  async getQAQuestion(id: number): Promise<QAQuestion | undefined> {
+    const [question] = await db.select().from(qaQuestions).where(eq(qaQuestions.id, id));
+    return question || undefined;
+  }
+
+  async createQAQuestion(insertQuestion: InsertQAQuestion): Promise<QAQuestion> {
+    const [question] = await db
+      .insert(qaQuestions)
+      .values(insertQuestion)
+      .returning();
+    return question;
+  }
+
+  async searchQAQuestions(query: string): Promise<QAQuestion[]> {
+    return await db
+      .select()
+      .from(qaQuestions)
+      .where(
+        or(
+          ilike(qaQuestions.question, `%${query}%`),
+          ilike(qaQuestions.answer, `%${query}%`),
+          ilike(qaQuestions.fullAnswer, `%${query}%`)
+        )
+      );
+  }
+
+  // Prayers
+  async getPrayers(): Promise<Prayer[]> {
+    return await db.select().from(prayers);
+  }
+
+  async getPrayer(id: number): Promise<Prayer | undefined> {
+    const [prayer] = await db.select().from(prayers).where(eq(prayers.id, id));
+    return prayer || undefined;
+  }
+
+  async createPrayer(insertPrayer: InsertPrayer): Promise<Prayer> {
+    const [prayer] = await db
+      .insert(prayers)
+      .values(insertPrayer)
+      .returning();
+    return prayer;
+  }
+
+  async searchPrayers(query: string): Promise<Prayer[]> {
+    return await db
+      .select()
+      .from(prayers)
+      .where(
+        or(
+          ilike(prayers.title, `%${query}%`),
+          ilike(prayers.content, `%${query}%`)
+        )
+      );
+  }
+
+  // Documents
+  async getDocuments(): Promise<Document[]> {
+    return await db.select().from(documents);
+  }
+
+  async getDocument(id: number): Promise<Document | undefined> {
+    const [document] = await db.select().from(documents).where(eq(documents.id, id));
+    return document || undefined;
+  }
+
+  async createDocument(insertDocument: InsertDocument): Promise<Document> {
+    const [document] = await db
+      .insert(documents)
+      .values(insertDocument)
+      .returning();
+    return document;
+  }
+
+  async searchDocuments(query: string): Promise<Document[]> {
+    return await db
+      .select()
+      .from(documents)
+      .where(
+        or(
+          ilike(documents.title, `%${query}%`),
+          ilike(documents.content, `%${query}%`)
+        )
+      );
+  }
+
+  // Bible
+  async getBibleVerses(): Promise<BibleVerse[]> {
+    return await db.select().from(bibleVerses);
+  }
+
+  async getBibleVerse(id: number): Promise<BibleVerse | undefined> {
+    const [verse] = await db.select().from(bibleVerses).where(eq(bibleVerses.id, id));
+    return verse || undefined;
+  }
+
+  async createBibleVerse(insertVerse: InsertBibleVerse): Promise<BibleVerse> {
+    const [verse] = await db
+      .insert(bibleVerses)
+      .values(insertVerse)
+      .returning();
+    return verse;
+  }
+
+  async searchBibleVerses(query: string): Promise<BibleVerse[]> {
+    return await db
+      .select()
+      .from(bibleVerses)
+      .where(
+        or(
+          ilike(bibleVerses.book, `%${query}%`),
+          ilike(bibleVerses.content, `%${query}%`)
+        )
+      );
+  }
+
+  async getBibleBooks(): Promise<{ testament: string; books: string[] }[]> {
+    const verses = await db.select().from(bibleVerses);
+    const testamentMap = new Map<string, Set<string>>();
+    
+    verses.forEach(verse => {
+      if (!testamentMap.has(verse.testament)) {
+        testamentMap.set(verse.testament, new Set());
+      }
+      testamentMap.get(verse.testament)!.add(verse.book);
+    });
+
+    return Array.from(testamentMap.entries()).map(([testament, books]) => ({
+      testament,
+      books: Array.from(books)
+    }));
+  }
+
+  // Bookmarks
+  async getBookmarks(userId: string = 'default'): Promise<Bookmark[]> {
+    return await db.select().from(bookmarks).where(eq(bookmarks.userId, userId));
+  }
+
+  async createBookmark(insertBookmark: InsertBookmark): Promise<Bookmark> {
+    const [bookmark] = await db
+      .insert(bookmarks)
+      .values(insertBookmark)
+      .returning();
+    return bookmark;
+  }
+
+  async deleteBookmark(contentType: string, contentId: number, userId: string = 'default'): Promise<boolean> {
+    const result = await db
+      .delete(bookmarks)
+      .where(
+        and(
+          eq(bookmarks.contentType, contentType),
+          eq(bookmarks.contentId, contentId),
+          eq(bookmarks.userId, userId)
+        )
+      );
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async isBookmarked(contentType: string, contentId: number, userId: string = 'default'): Promise<boolean> {
+    const [bookmark] = await db
+      .select()
+      .from(bookmarks)
+      .where(
+        and(
+          eq(bookmarks.contentType, contentType),
+          eq(bookmarks.contentId, contentId),
+          eq(bookmarks.userId, userId)
+        )
+      );
+    return !!bookmark;
+  }
+}
+
+export const storage = new DatabaseStorage();
