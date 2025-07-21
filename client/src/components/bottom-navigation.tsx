@@ -30,7 +30,7 @@ export function BottomNavigation({ activeTab, onTabChange }: BottomNavigationPro
               className={cn(
                 "flex flex-col items-center py-2 px-3 rounded-lg transition-all",
                 isActive 
-                  ? "active-tab bg-catholic-blue text-white" 
+                  ? "active-tab bg-catholic-green text-white" 
                   : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
               )}
             >

@@ -100,7 +100,7 @@ export function DocumentsSection({ searchQuery }: DocumentsSectionProps) {
                 </div>
                 <Button 
                   variant="ghost" 
-                  className="text-catholic-blue hover:text-blue-700 p-0 h-auto"
+                  className="text-catholic-green hover:text-green-700 p-0 h-auto"
                 >
                   Browse →
                 </Button>

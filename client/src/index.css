@@ -13,23 +13,25 @@
   --card-foreground: hsl(20, 14.3%, 4.1%);
   --border: hsl(20, 5.9%, 90%);
   --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(222, 68%, 35%);
-  --primary-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(142, 76%, 36%);
+  --primary-foreground: hsl(355, 25%, 97%);
   --secondary: hsl(60, 4.8%, 95.9%);
   --secondary-foreground: hsl(24, 9.8%, 10%);
   --accent: hsl(60, 4.8%, 95.9%);
   --accent-foreground: hsl(24, 9.8%, 10%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
+  --ring: hsl(142, 76%, 36%);
   --radius: 0.5rem;
   
-  /* Catholic themed colors */
-  --catholic-blue: hsl(222, 68%, 35%);
+  /* Catholic themed colors - Green palette */
+  --catholic-green: hsl(142, 76%, 36%);
+  --catholic-light-green: hsl(142, 60%, 50%);
+  --catholic-dark-green: hsl(142, 85%, 25%);
   --catholic-gold: hsl(33, 91%, 46%);
-  --catholic-purple: hsl(259, 68%, 55%);
+  --catholic-sage: hsl(120, 20%, 60%);
   --catholic-cream: hsl(60, 33%, 98%);
-  --catholic-gray: hsl(220, 9%, 46%);
+  --catholic-gray: hsl(120, 9%, 46%);
 }
 
 .dark {
@@ -43,15 +45,15 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(222, 68%, 35%);
-  --primary-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(142, 76%, 36%);
+  --primary-foreground: hsl(355, 25%, 97%);
   --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
   --accent: hsl(240, 3.7%, 15.9%);
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
+  --ring: hsl(142, 76%, 36%);
   --radius: 0.5rem;
 }
 
@@ -66,12 +68,28 @@
 }
 
 @layer utilities {
-  .catholic-blue {
-    color: var(--catholic-blue);
+  .catholic-green {
+    color: var(--catholic-green);
   }
   
-  .bg-catholic-blue {
-    background-color: var(--catholic-blue);
+  .bg-catholic-green {
+    background-color: var(--catholic-green);
+  }
+  
+  .catholic-light-green {
+    color: var(--catholic-light-green);
+  }
+  
+  .bg-catholic-light-green {
+    background-color: var(--catholic-light-green);
+  }
+  
+  .catholic-dark-green {
+    color: var(--catholic-dark-green);
+  }
+  
+  .bg-catholic-dark-green {
+    background-color: var(--catholic-dark-green);
   }
   
   .catholic-gold {
@@ -82,12 +100,12 @@
     background-color: var(--catholic-gold);
   }
   
-  .catholic-purple {
-    color: var(--catholic-purple);
+  .catholic-sage {
+    color: var(--catholic-sage);
   }
   
-  .bg-catholic-purple {
-    background-color: var(--catholic-purple);
+  .bg-catholic-sage {
+    background-color: var(--catholic-sage);
   }
   
   .bg-catholic-cream {
@@ -100,7 +118,7 @@
   }
   
   .catholic-gradient {
-    background: linear-gradient(135deg, var(--catholic-blue) 0%, hsl(222, 68%, 45%) 100%);
+    background: linear-gradient(135deg, var(--catholic-green) 0%, var(--catholic-light-green) 100%);
   }
   
   .text-shadow {
@@ -124,7 +142,7 @@
   }
 
   .active-tab {
-    @apply bg-catholic-blue text-white;
+    @apply bg-catholic-green text-white;
   }
   
   .active-tab svg,

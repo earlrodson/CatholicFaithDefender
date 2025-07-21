@@ -77,7 +77,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 glass-effect border-b border-gray-200">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between mb-3">
-            <h1 className="text-xl font-semibold catholic-blue text-shadow">
+            <h1 className="text-xl font-semibold catholic-green text-shadow">
               Catholic Faith Defender
             </h1>
             <div className="flex items-center space-x-2">

@@ -61,10 +61,10 @@ export function PrayersSection({ searchQuery }: PrayersSectionProps) {
 
   const getColorForCategory = (category: string | null) => {
     switch (category) {
-      case 'Essential': return 'bg-catholic-blue bg-opacity-10 text-catholic-blue';
+      case 'Essential': return 'bg-catholic-green bg-opacity-10 text-catholic-green';
       case 'Marian': return 'bg-catholic-gold bg-opacity-10 text-catholic-gold';
-      case 'Guardian Angel': return 'bg-green-600 bg-opacity-10 text-green-600';
-      default: return 'bg-catholic-purple bg-opacity-10 text-catholic-purple';
+      case 'Guardian Angel': return 'bg-catholic-sage bg-opacity-10 text-catholic-sage';
+      default: return 'bg-catholic-light-green bg-opacity-10 text-catholic-light-green';
     }
   };
 
@@ -134,7 +134,7 @@ export function PrayersSection({ searchQuery }: PrayersSectionProps) {
                   <p className="text-sm text-gray-600 line-clamp-2 mb-3">
                     {prayer.content}
                   </p>
-                  <Button variant="ghost" className="text-catholic-blue p-0 h-auto">
+                  <Button variant="ghost" className="text-catholic-green p-0 h-auto">
                     View Full Prayer →
                   </Button>
                 </CardContent>

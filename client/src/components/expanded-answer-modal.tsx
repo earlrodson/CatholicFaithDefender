@@ -28,7 +28,7 @@ export function ExpandedAnswerModal({ question, isOpen, onClose }: ExpandedAnswe
             
             {question.category && (
               <div className="mt-6 pt-4 border-t border-gray-200">
-                <span className="inline-block bg-catholic-blue bg-opacity-10 text-catholic-blue text-xs font-medium px-3 py-1 rounded-full">
+                <span className="inline-block bg-catholic-green bg-opacity-10 text-catholic-green text-xs font-medium px-3 py-1 rounded-full">
                   {question.category}
                 </span>
               </div>

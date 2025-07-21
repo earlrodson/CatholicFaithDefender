@@ -95,7 +95,7 @@ export function QASection({ searchQuery, onExpandAnswer }: QASectionProps) {
               <Button
                 variant="ghost"
                 onClick={() => onExpandAnswer(question)}
-                className="text-catholic-blue hover:text-blue-700 p-0 h-auto"
+                className="text-catholic-green hover:text-green-700 p-0 h-auto"
               >
                 Read Full Answer →
               </Button>

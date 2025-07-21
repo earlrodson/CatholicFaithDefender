@@ -66,8 +66,8 @@ export function BibleSection({ searchQuery }: BibleSectionProps) {
       <div className="grid grid-cols-2 gap-3">
         <Card className="transition-all hover:shadow-md">
           <CardContent className="p-4 text-center">
-            <div className="w-12 h-12 bg-catholic-blue bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Book className="w-6 h-6 text-catholic-blue" />
+            <div className="w-12 h-12 bg-catholic-green bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <Book className="w-6 h-6 text-catholic-green" />
             </div>
             <h3 className="font-medium text-gray-900 mb-1">Old Testament</h3>
             <p className="text-xs text-gray-600">39 Books</p>
@@ -127,7 +127,7 @@ export function BibleSection({ searchQuery }: BibleSectionProps) {
             <Card key={verse.id} className="transition-all hover:shadow-md">
               <CardContent className="p-4">
                 <div className="flex justify-between items-start mb-2">
-                  <span className="text-sm font-medium text-catholic-blue">
+                  <span className="text-sm font-medium text-catholic-green">
                     {verse.book} {verse.chapter}:{verse.verse}
                   </span>
                   <button
