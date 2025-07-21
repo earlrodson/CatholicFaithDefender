@@ -20,29 +20,29 @@ import { eq, ilike, or, and } from "drizzle-orm";
 
 export interface IStorage {
   // QA Questions
-  getQAQuestions(): Promise<QAQuestion[]>;
+  getQAQuestions(language?: string): Promise<QAQuestion[]>;
   getQAQuestion(id: number): Promise<QAQuestion | undefined>;
   createQAQuestion(question: InsertQAQuestion): Promise<QAQuestion>;
-  searchQAQuestions(query: string): Promise<QAQuestion[]>;
+  searchQAQuestions(query: string, language?: string): Promise<QAQuestion[]>;
 
   // Prayers
-  getPrayers(): Promise<Prayer[]>;
+  getPrayers(language?: string): Promise<Prayer[]>;
   getPrayer(id: number): Promise<Prayer | undefined>;
   createPrayer(prayer: InsertPrayer): Promise<Prayer>;
-  searchPrayers(query: string): Promise<Prayer[]>;
+  searchPrayers(query: string, language?: string): Promise<Prayer[]>;
 
   // Documents
-  getDocuments(): Promise<Document[]>;
+  getDocuments(language?: string): Promise<Document[]>;
   getDocument(id: number): Promise<Document | undefined>;
   createDocument(document: InsertDocument): Promise<Document>;
-  searchDocuments(query: string): Promise<Document[]>;
+  searchDocuments(query: string, language?: string): Promise<Document[]>;
 
   // Bible
-  getBibleVerses(): Promise<BibleVerse[]>;
+  getBibleVerses(language?: string): Promise<BibleVerse[]>;
   getBibleVerse(id: number): Promise<BibleVerse | undefined>;
   createBibleVerse(verse: InsertBibleVerse): Promise<BibleVerse>;
-  searchBibleVerses(query: string): Promise<BibleVerse[]>;
-  getBibleBooks(): Promise<{ testament: string; books: string[] }[]>;
+  searchBibleVerses(query: string, language?: string): Promise<BibleVerse[]>;
+  getBibleBooks(language?: string): Promise<{ testament: string; books: string[] }[]>;
 
   // Bookmarks
   getBookmarks(userId?: string): Promise<Bookmark[]>;
@@ -404,8 +404,9 @@ export class MemStorage implements IStorage {
 
 export class DatabaseStorage implements IStorage {
   // QA Questions
-  async getQAQuestions(): Promise<QAQuestion[]> {
-    return await db.select().from(qaQuestions);
+  async getQAQuestions(language: string = 'english'): Promise<QAQuestion[]> {
+    return await db.select().from(qaQuestions)
+      .where(eq(qaQuestions.language, language));
   }
 
   async getQAQuestion(id: number): Promise<QAQuestion | undefined> {
@@ -421,22 +422,26 @@ export class DatabaseStorage implements IStorage {
     return question;
   }
 
-  async searchQAQuestions(query: string): Promise<QAQuestion[]> {
+  async searchQAQuestions(query: string, language: string = 'english'): Promise<QAQuestion[]> {
     return await db
       .select()
       .from(qaQuestions)
       .where(
-        or(
-          ilike(qaQuestions.question, `%${query}%`),
-          ilike(qaQuestions.answer, `%${query}%`),
-          ilike(qaQuestions.fullAnswer, `%${query}%`)
+        and(
+          eq(qaQuestions.language, language),
+          or(
+            ilike(qaQuestions.question, `%${query}%`),
+            ilike(qaQuestions.answer, `%${query}%`),
+            ilike(qaQuestions.fullAnswer, `%${query}%`)
+          )
         )
       );
   }
 
   // Prayers
-  async getPrayers(): Promise<Prayer[]> {
-    return await db.select().from(prayers);
+  async getPrayers(language: string = 'english'): Promise<Prayer[]> {
+    return await db.select().from(prayers)
+      .where(eq(prayers.language, language));
   }
 
   async getPrayer(id: number): Promise<Prayer | undefined> {
@@ -452,21 +457,25 @@ export class DatabaseStorage implements IStorage {
     return prayer;
   }
 
-  async searchPrayers(query: string): Promise<Prayer[]> {
+  async searchPrayers(query: string, language: string = 'english'): Promise<Prayer[]> {
     return await db
       .select()
       .from(prayers)
       .where(
-        or(
-          ilike(prayers.title, `%${query}%`),
-          ilike(prayers.content, `%${query}%`)
+        and(
+          eq(prayers.language, language),
+          or(
+            ilike(prayers.title, `%${query}%`),
+            ilike(prayers.content, `%${query}%`)
+          )
         )
       );
   }
 
   // Documents
-  async getDocuments(): Promise<Document[]> {
-    return await db.select().from(documents);
+  async getDocuments(language: string = 'english'): Promise<Document[]> {
+    return await db.select().from(documents)
+      .where(eq(documents.language, language));
   }
 
   async getDocument(id: number): Promise<Document | undefined> {
@@ -482,21 +491,25 @@ export class DatabaseStorage implements IStorage {
     return document;
   }
 
-  async searchDocuments(query: string): Promise<Document[]> {
+  async searchDocuments(query: string, language: string = 'english'): Promise<Document[]> {
     return await db
       .select()
       .from(documents)
       .where(
-        or(
-          ilike(documents.title, `%${query}%`),
-          ilike(documents.content, `%${query}%`)
+        and(
+          eq(documents.language, language),
+          or(
+            ilike(documents.title, `%${query}%`),
+            ilike(documents.content, `%${query}%`)
+          )
         )
       );
   }
 
   // Bible
-  async getBibleVerses(): Promise<BibleVerse[]> {
-    return await db.select().from(bibleVerses);
+  async getBibleVerses(language: string = 'english'): Promise<BibleVerse[]> {
+    return await db.select().from(bibleVerses)
+      .where(eq(bibleVerses.language, language));
   }
 
   async getBibleVerse(id: number): Promise<BibleVerse | undefined> {
@@ -512,20 +525,24 @@ export class DatabaseStorage implements IStorage {
     return verse;
   }
 
-  async searchBibleVerses(query: string): Promise<BibleVerse[]> {
+  async searchBibleVerses(query: string, language: string = 'english'): Promise<BibleVerse[]> {
     return await db
       .select()
       .from(bibleVerses)
       .where(
-        or(
-          ilike(bibleVerses.book, `%${query}%`),
-          ilike(bibleVerses.content, `%${query}%`)
+        and(
+          eq(bibleVerses.language, language),
+          or(
+            ilike(bibleVerses.book, `%${query}%`),
+            ilike(bibleVerses.content, `%${query}%`)
+          )
         )
       );
   }
 
-  async getBibleBooks(): Promise<{ testament: string; books: string[] }[]> {
-    const verses = await db.select().from(bibleVerses);
+  async getBibleBooks(language: string = 'english'): Promise<{ testament: string; books: string[] }[]> {
+    const verses = await db.select().from(bibleVerses)
+      .where(eq(bibleVerses.language, language));
     const testamentMap = new Map<string, Set<string>>();
     
     verses.forEach(verse => {

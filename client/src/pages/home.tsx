@@ -6,6 +6,7 @@ import { PrayersSection } from "@/components/prayers-section";
 import { DocumentsSection } from "@/components/documents-section";
 import { BibleSection } from "@/components/bible-section";
 import { ExpandedAnswerModal } from "@/components/expanded-answer-modal";
+import { LanguageSelector } from "@/components/language-selector";
 import { useOfflineStorage } from "@/hooks/use-offline-storage";
 import { useToast } from "@/hooks/use-toast";
 import { Settings } from "lucide-react";
@@ -80,13 +81,14 @@ export default function Home() {
             <h1 className="text-xl font-semibold catholic-green text-shadow">
               Catholic Faith Defender
             </h1>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               {!isOnline && (
                 <div className="flex items-center">
                   <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                   <span className="text-xs text-gray-600">Offline</span>
                 </div>
               )}
+              <LanguageSelector />
               <button className="p-2 rounded-lg hover:bg-gray-100 transition-all">
                 <Settings className="w-6 h-6 text-gray-600" />
               </button>

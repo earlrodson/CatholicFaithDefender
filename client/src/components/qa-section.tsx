@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Bookmark } from "lucide-react";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useOfflineStorage } from "@/hooks/use-offline-storage";
+import { useLanguageContext } from "@/hooks/use-language";
 import { cn } from "@/lib/utils";
 import type { QAQuestion } from "@shared/schema";
 
@@ -15,17 +16,18 @@ interface QASectionProps {
 export function QASection({ searchQuery, onExpandAnswer }: QASectionProps) {
   const { getOfflineData } = useOfflineStorage();
   const { bookmarks, toggleBookmark } = useBookmarks();
+  const { currentLanguage } = useLanguageContext();
   
   const { data: questions = [], isLoading } = useQuery({
-    queryKey: searchQuery ? ['/api/qa/search', searchQuery] : ['/api/qa'],
+    queryKey: searchQuery ? ['/api/qa/search', searchQuery, currentLanguage] : ['/api/qa', currentLanguage],
     queryFn: async () => {
       try {
         if (searchQuery) {
-          const response = await fetch(`/api/qa/search/${encodeURIComponent(searchQuery)}`);
+          const response = await fetch(`/api/qa/search/${encodeURIComponent(searchQuery)}?lang=${currentLanguage}`);
           if (!response.ok) throw new Error('Network request failed');
           return response.json();
         } else {
-          const response = await fetch('/api/qa');
+          const response = await fetch(`/api/qa?lang=${currentLanguage}`);
           if (!response.ok) throw new Error('Network request failed');
           return response.json();
         }

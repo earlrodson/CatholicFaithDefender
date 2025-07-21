@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Bookmark } from "lucide-react";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useOfflineStorage } from "@/hooks/use-offline-storage";
+import { useLanguageContext } from "@/hooks/use-language";
 import { cn } from "@/lib/utils";
 import type { Document } from "@shared/schema";
 
@@ -14,17 +15,18 @@ interface DocumentsSectionProps {
 export function DocumentsSection({ searchQuery }: DocumentsSectionProps) {
   const { getOfflineData } = useOfflineStorage();
   const { bookmarks, toggleBookmark } = useBookmarks();
+  const { currentLanguage } = useLanguageContext();
   
   const { data: documents = [], isLoading } = useQuery({
-    queryKey: searchQuery ? ['/api/documents/search', searchQuery] : ['/api/documents'],
+    queryKey: searchQuery ? ['/api/documents/search', searchQuery, currentLanguage] : ['/api/documents', currentLanguage],
     queryFn: async () => {
       try {
         if (searchQuery) {
-          const response = await fetch(`/api/documents/search/${encodeURIComponent(searchQuery)}`);
+          const response = await fetch(`/api/documents/search/${encodeURIComponent(searchQuery)}?lang=${currentLanguage}`);
           if (!response.ok) throw new Error('Network request failed');
           return response.json();
         } else {
-          const response = await fetch('/api/documents');
+          const response = await fetch(`/api/documents?lang=${currentLanguage}`);
           if (!response.ok) throw new Error('Network request failed');
           return response.json();
         }

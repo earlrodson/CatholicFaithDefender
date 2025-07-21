@@ -8,7 +8,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // QA Questions
   app.get("/api/qa", async (req, res) => {
     try {
-      const questions = await storage.getQAQuestions();
+      const language = req.query.lang as string || 'english';
+      const questions = await storage.getQAQuestions(language);
       res.json(questions);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch Q&A questions" });
@@ -31,7 +32,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/qa/search/:query", async (req, res) => {
     try {
       const query = req.params.query;
-      const questions = await storage.searchQAQuestions(query);
+      const language = req.query.lang as string || 'english';
+      const questions = await storage.searchQAQuestions(query, language);
       res.json(questions);
     } catch (error) {
       res.status(500).json({ message: "Failed to search questions" });
@@ -41,7 +43,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Prayers
   app.get("/api/prayers", async (req, res) => {
     try {
-      const prayers = await storage.getPrayers();
+      const language = req.query.lang as string || 'english';
+      const prayers = await storage.getPrayers(language);
       res.json(prayers);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch prayers" });
@@ -64,7 +67,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/prayers/search/:query", async (req, res) => {
     try {
       const query = req.params.query;
-      const prayers = await storage.searchPrayers(query);
+      const language = req.query.lang as string || 'english';
+      const prayers = await storage.searchPrayers(query, language);
       res.json(prayers);
     } catch (error) {
       res.status(500).json({ message: "Failed to search prayers" });
@@ -74,7 +78,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Documents
   app.get("/api/documents", async (req, res) => {
     try {
-      const documents = await storage.getDocuments();
+      const language = req.query.lang as string || 'english';
+      const documents = await storage.getDocuments(language);
       res.json(documents);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch documents" });
@@ -97,7 +102,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/documents/search/:query", async (req, res) => {
     try {
       const query = req.params.query;
-      const documents = await storage.searchDocuments(query);
+      const language = req.query.lang as string || 'english';
+      const documents = await storage.searchDocuments(query, language);
       res.json(documents);
     } catch (error) {
       res.status(500).json({ message: "Failed to search documents" });
@@ -107,7 +113,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Bible
   app.get("/api/bible", async (req, res) => {
     try {
-      const verses = await storage.getBibleVerses();
+      const language = req.query.lang as string || 'english';
+      const verses = await storage.getBibleVerses(language);
       res.json(verses);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch Bible verses" });
@@ -116,7 +123,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/bible/books", async (req, res) => {
     try {
-      const books = await storage.getBibleBooks();
+      const language = req.query.lang as string || 'english';
+      const books = await storage.getBibleBooks(language);
       res.json(books);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch Bible books" });
@@ -139,7 +147,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/bible/search/:query", async (req, res) => {
     try {
       const query = req.params.query;
-      const verses = await storage.searchBibleVerses(query);
+      const language = req.query.lang as string || 'english';
+      const verses = await storage.searchBibleVerses(query, language);
       res.json(verses);
     } catch (error) {
       res.status(500).json({ message: "Failed to search verses" });

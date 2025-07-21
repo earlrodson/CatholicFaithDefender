@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Bookmark, Book } from "lucide-react";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useOfflineStorage } from "@/hooks/use-offline-storage";
+import { useLanguageContext } from "@/hooks/use-language";
 import { cn } from "@/lib/utils";
 import type { BibleVerse } from "@shared/schema";
 
@@ -14,17 +15,18 @@ interface BibleSectionProps {
 export function BibleSection({ searchQuery }: BibleSectionProps) {
   const { getOfflineData } = useOfflineStorage();
   const { bookmarks, toggleBookmark } = useBookmarks();
+  const { currentLanguage } = useLanguageContext();
   
   const { data: verses = [], isLoading } = useQuery({
-    queryKey: searchQuery ? ['/api/bible/search', searchQuery] : ['/api/bible'],
+    queryKey: searchQuery ? ['/api/bible/search', searchQuery, currentLanguage] : ['/api/bible', currentLanguage],
     queryFn: async () => {
       try {
         if (searchQuery) {
-          const response = await fetch(`/api/bible/search/${encodeURIComponent(searchQuery)}`);
+          const response = await fetch(`/api/bible/search/${encodeURIComponent(searchQuery)}?lang=${currentLanguage}`);
           if (!response.ok) throw new Error('Network request failed');
           return response.json();
         } else {
-          const response = await fetch('/api/bible');
+          const response = await fetch(`/api/bible?lang=${currentLanguage}`);
           if (!response.ok) throw new Error('Network request failed');
           return response.json();
         }

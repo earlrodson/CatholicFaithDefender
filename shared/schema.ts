@@ -8,6 +8,7 @@ export const qaQuestions = pgTable("qa_questions", {
   answer: text("answer").notNull(),
   fullAnswer: text("full_answer"),
   category: text("category"),
+  language: text("language").notNull().default("english"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -17,6 +18,7 @@ export const prayers = pgTable("prayers", {
   content: text("content").notNull(),
   category: text("category"),
   latin: text("latin"),
+  language: text("language").notNull().default("english"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -27,6 +29,7 @@ export const documents = pgTable("documents", {
   type: text("type").notNull(), // encyclical, catechism, etc.
   author: text("author"),
   articleCount: integer("article_count"),
+  language: text("language").notNull().default("english"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -37,6 +40,7 @@ export const bibleVerses = pgTable("bible_verses", {
   verse: integer("verse").notNull(),
   content: text("content").notNull(),
   testament: text("testament").notNull(), // old, new
+  language: text("language").notNull().default("english"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

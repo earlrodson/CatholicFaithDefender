@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Shield, Star, Heart, Sun } from "lucide-react";
 import { useOfflineStorage } from "@/hooks/use-offline-storage";
+import { useLanguageContext } from "@/hooks/use-language";
 import type { Prayer } from "@shared/schema";
 
 interface PrayersSectionProps {
@@ -11,17 +12,18 @@ interface PrayersSectionProps {
 
 export function PrayersSection({ searchQuery }: PrayersSectionProps) {
   const { getOfflineData } = useOfflineStorage();
+  const { currentLanguage } = useLanguageContext();
   
   const { data: prayers = [], isLoading } = useQuery({
-    queryKey: searchQuery ? ['/api/prayers/search', searchQuery] : ['/api/prayers'],
+    queryKey: searchQuery ? ['/api/prayers/search', searchQuery, currentLanguage] : ['/api/prayers', currentLanguage],
     queryFn: async () => {
       try {
         if (searchQuery) {
-          const response = await fetch(`/api/prayers/search/${encodeURIComponent(searchQuery)}`);
+          const response = await fetch(`/api/prayers/search/${encodeURIComponent(searchQuery)}?lang=${currentLanguage}`);
           if (!response.ok) throw new Error('Network request failed');
           return response.json();
         } else {
-          const response = await fetch('/api/prayers');
+          const response = await fetch(`/api/prayers?lang=${currentLanguage}`);
           if (!response.ok) throw new Error('Network request failed');
           return response.json();
         }

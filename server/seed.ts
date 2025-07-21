@@ -5,13 +5,31 @@ import type { InsertQAQuestion, InsertPrayer, InsertDocument, InsertBibleVerse }
 async function seedDatabase() {
   console.log('Starting database seeding...');
 
-  // Sample QA Questions from the provided data
+  // Sample QA Questions in multiple languages
   const sampleQAQuestions: InsertQAQuestion[] = [
+    // English content
     {
       question: "What is the Catholic teaching on the Eucharist?",
       answer: "Catholics believe in the Real Presence—that during the Mass, the bread and wine become the actual Body and Blood of Christ (transubstantiation), while maintaining their physical appearances.",
       fullAnswer: "Catholics believe in the Real Presence—that during the Mass, the bread and wine become the actual Body and Blood of Christ through transubstantiation, while maintaining their physical appearances. This teaching is based on Jesus's words at the Last Supper: 'This is my body' and 'This is my blood.' The Church teaches that this transformation occurs through the priest's consecration during Mass, acting in persona Christi (in the person of Christ). This doctrine was formally defined by the Council of Trent and remains a central mystery of Catholic faith.",
-      category: "Sacraments"
+      category: "Sacraments",
+      language: "english"
+    },
+    // Cebuano translation
+    {
+      question: "Unsa ang pagtudlo sa Katoliko bahin sa Eukaristiya?",
+      answer: "Nagtoo ang mga Katoliko sa Tinuod nga Presensya—nga sa panahon sa Misa, ang tinapay ug bino mahimong tinuod nga Lawas ug Dugo ni Cristo (transubstantiation), samtang nagpabilin ang ilang pisikal nga panagway.",
+      fullAnswer: "Nagtoo ang mga Katoliko sa Tinuod nga Presensya—nga sa panahon sa Misa, ang tinapay ug bino mahimong tinuod nga Lawas ug Dugo ni Cristo pinaagi sa transubstantiation, samtang nagpabilin ang ilang pisikal nga panagway. Kini nga pagtudlo nakabase sa mga pulong ni Jesus sa Katapusang Panihapon: 'Kini akong lawas' ug 'Kini akong dugo.' Nagtudlo ang Simbahan nga kini nga pagbag-o mahitabo pinaagi sa konsagrasyon sa pari sa panahon sa Misa, nga naglihok sa persona Christi (sa pagka-tawo ni Cristo).",
+      category: "Mga Sacramento",
+      language: "cebuano"
+    },
+    // Tagalog translation
+    {
+      question: "Ano ang turo ng Katoliko tungkol sa Eukaristiya?",
+      answer: "Naniniwala ang mga Katoliko sa Tunay na Presensya—na sa panahon ng Misa, ang tinapay at alak ay nagiging tunay na Katawan at Dugo ni Cristo (transubstantiation), habang nananatiling ang kanilang pisikal na anyo.",
+      fullAnswer: "Naniniwala ang mga Katoliko sa Tunay na Presensya—na sa panahon ng Misa, ang tinapay at alak ay nagiging tunay na Katawan at Dugo ni Cristo sa pamamagitan ng transubstantiation, habang nananatiling ang kanilang pisikal na anyo. Ang aral na ito ay batay sa mga salita ni Jesus sa Huling Hapunan: 'Ito ang aking katawan' at 'Ito ang aking dugo.' Itinuturo ng Simbahan na ang pagbabagong ito ay nangyayari sa pamamagitan ng konsagrasyon ng pari sa panahon ng Misa, na kumikilos sa persona Christi (sa pagkatao ni Cristo).",
+      category: "Mga Sacramento",
+      language: "tagalog"
     },
     {
       question: "Why do Catholics pray to saints?",
@@ -69,19 +87,52 @@ async function seedDatabase() {
     }
   ];
 
-  // Sample Prayers
+  // Sample Prayers in multiple languages
   const samplePrayers: InsertPrayer[] = [
+    // English prayers
     {
       title: "Our Father",
       content: "Our Father, who art in heaven, hallowed be thy name. Thy kingdom come, thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen.",
       category: "Essential",
-      latin: "Pater noster, qui es in caelis, sanctificetur nomen tuum..."
+      latin: "Pater noster, qui es in caelis, sanctificetur nomen tuum...",
+      language: "english"
     },
     {
       title: "Hail Mary",
       content: "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
       category: "Marian",
-      latin: "Ave Maria, gratia plena, Dominus tecum..."
+      latin: "Ave Maria, gratia plena, Dominus tecum...",
+      language: "english"
+    },
+    // Cebuano prayers
+    {
+      title: "Amahan Namo",
+      content: "Amahan namo nga anaa sa mga langit, pagkabalaan ang imong ngalan. Umabot kanamo ang imong gingharian, matuman ang imong kabubut-on dinhi sa yuta maingon sa langit. Hatagi kami karong adlawa sa among adlaw-adlaw nga tinapay, ug pasayloa kami sa among mga sala, maingon nga nagpasaylo kami sa mga nakasala kanamo. Ug ayaw kami itugyan sa panulay, kondili luwasa kami sa dautan. Amen.",
+      category: "Importante",
+      latin: "Pater noster, qui es in caelis, sanctificetur nomen tuum...",
+      language: "cebuano"
+    },
+    {
+      title: " Ave Maria",
+      content: "Aveha Maria, puno ka sa grasya, ang Ginoo anaa kanimo. Bulahan ka sa mga babaye, ug bulahan ang bunga sa imong tagoangkan, si Jesus. Santa Maria, Inahan sa Dios, mag-ampo ka alang kanamo nga mga makasasala, karon ug sa takna sa among kamatayon. Amen.",
+      category: "Mariano",
+      latin: "Ave Maria, gratia plena, Dominus tecum...",
+      language: "cebuano"
+    },
+    // Tagalog prayers
+    {
+      title: "Ama Namin",
+      content: "Ama namin, sumasalangit ka, sambahin ang ngalan mo. Mapasaamin ang kaharian mo. Sundin ang loob mo, dito sa lupa para nang sa langit. Bigyan mo kami ngayon ng aming kakanin sa araw-araw, at patawarin mo kami sa aming mga sala, para nang pagpapatawad namin sa mga nakakasala sa amin. At huwag mo kaming ipahintulot sa tukso, at iadya mo kami sa lahat ng masama. Amen.",
+      category: "Mahalagang Panalangin",
+      latin: "Pater noster, qui es in caelis, sanctificetur nomen tuum...",
+      language: "tagalog"
+    },
+    {
+      title: "Aba Ginoong Maria",
+      content: "Aba Ginoong Maria, napupuno ka ng grasya, ang Panginoon ay sumasaiyo. Pinagpala ka sa mga babae, at pinagpala naman ang bunga ng inyong sinapupunan na si Jesus. Santa Maria, Ina ng Diyos, ipanalangin mo kami na mga makasalanan, ngayon at kung kami ay mamatay. Amen.",
+      category: "Panalangin kay Maria",
+      latin: "Ave Maria, gratia plena, Dominus tecum...",
+      language: "tagalog"
     },
     {
       title: "Glory Be",
@@ -96,53 +147,81 @@ async function seedDatabase() {
     }
   ];
 
-  // Sample Documents
+  // Sample Documents in multiple languages
   const sampleDocuments: InsertDocument[] = [
+    // English documents
     {
       title: "Catechism of the Catholic Church",
       content: "Complete Catholic doctrine and teaching",
       type: "catechism",
       author: "Catholic Church",
-      articleCount: 2865
+      articleCount: 2865,
+      language: "english"
     },
     {
       title: "Lumen Gentium",
       content: "Dogmatic Constitution on the Church from Vatican II",
       type: "vatican_ii",
       author: "Second Vatican Council",
-      articleCount: 69
+      articleCount: 69,
+      language: "english"
     },
+    // Cebuano documents
     {
-      title: "Rerum Novarum",
-      content: "On the Rights and Duties of Capital and Labor",
-      type: "encyclical",
-      author: "Pope Leo XIII",
-      articleCount: 63
+      title: "Katekismo sa Simbahang Katoliko",
+      content: "Kompleto nga doktrina ug pagtudlo sa Katoliko",
+      type: "katekismo",
+      author: "Simbahang Katoliko",
+      articleCount: 2865,
+      language: "cebuano"
+    },
+    // Tagalog documents
+    {
+      title: "Katekismo ng Simbahang Katoliko",
+      content: "Kumpletong doktrina at aral ng Katoliko",
+      type: "katekismo",
+      author: "Simbahang Katoliko",
+      articleCount: 2865,
+      language: "tagalog"
     }
   ];
 
-  // Sample Bible Verses
+  // Sample Bible Verses in multiple languages
   const sampleVerses: InsertBibleVerse[] = [
+    // English verses
     {
       book: "John",
       chapter: 3,
       verse: 16,
       content: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
-      testament: "new"
+      testament: "new",
+      language: "english"
     },
     {
       book: "Matthew",
       chapter: 28,
       verse: 19,
       content: "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit,",
-      testament: "new"
+      testament: "new",
+      language: "english"
     },
+    // Cebuano verses
     {
-      book: "1 Corinthians",
-      chapter: 13,
-      verse: 4,
-      content: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud.",
-      testament: "new"
+      book: "Juan",
+      chapter: 3,
+      verse: 16,
+      content: "Kay sa ingon gayud pagkahigugma sa Dios sa kalibutan, nga iyang gihatag ang iyang bugtong nga Anak, aron ang bisan kinsa nga motoo kaniya dili mamatay kondili may kinabuhing dayon.",
+      testament: "bag-o",
+      language: "cebuano"
+    },
+    // Tagalog verses
+    {
+      book: "Juan",
+      chapter: 3,
+      verse: 16,
+      content: "Sapagkat gayon na lamang ang pag-ibig ng Diyos sa sanglibutan, kaya't ibinigay niya ang kanyang kaisa-isang Anak, upang ang sinumang sumampalataya sa kanya ay hindi mamatay kundi magkaroon ng buhay na walang hanggan.",
+      testament: "bago",
+      language: "tagalog"
     }
   ];
 
