@@ -252,6 +252,9 @@ export class MemStorage implements IStorage {
     const question: QAQuestion = {
       ...insertQuestion,
       id,
+      fullAnswer: insertQuestion.fullAnswer || null,
+      category: insertQuestion.category || null,
+      language: insertQuestion.language || 'english',
       createdAt: new Date(),
     };
     this.qaQuestions.set(id, question);
@@ -281,6 +284,9 @@ export class MemStorage implements IStorage {
     const prayer: Prayer = {
       ...insertPrayer,
       id,
+      category: insertPrayer.category || null,
+      latin: insertPrayer.latin || null,
+      language: insertPrayer.language || 'english',
       createdAt: new Date(),
     };
     this.prayers.set(id, prayer);
@@ -309,6 +315,9 @@ export class MemStorage implements IStorage {
     const document: Document = {
       ...insertDocument,
       id,
+      author: insertDocument.author || null,
+      articleCount: insertDocument.articleCount || null,
+      language: insertDocument.language || 'english',
       createdAt: new Date(),
     };
     this.documents.set(id, document);
@@ -337,6 +346,7 @@ export class MemStorage implements IStorage {
     const verse: BibleVerse = {
       ...insertVerse,
       id,
+      language: insertVerse.language || 'english',
       createdAt: new Date(),
     };
     this.bibleVerses.set(id, verse);
@@ -372,6 +382,7 @@ export class MemStorage implements IStorage {
     const bookmark: Bookmark = {
       ...insertBookmark,
       id,
+      userId: insertBookmark.userId || 'default',
       createdAt: new Date(),
     };
     this.bookmarks.set(id, bookmark);

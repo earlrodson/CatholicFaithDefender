@@ -8,11 +8,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // QA Questions
   app.get("/api/qa", async (req, res) => {
     try {
-      const language = req.query.lang as string || 'english';
-      const questions = await storage.getQAQuestions(language);
-      res.json(questions);
+      const language = (req.query.lang as string) || 'english';
+      console.log(`Fetching Q&A questions for language: ${language}`);
+      
+      // Ensure we always get an array, even if the storage layer returns undefined
+      let questions = await storage.getQAQuestions(language);
+      
+      // If questions is not an array, log the error and return an empty array
+      if (!Array.isArray(questions)) {
+        console.error('Expected an array of questions but got:', questions);
+        questions = [];
+      }
+      
+      console.log(`Found ${questions.length} questions for language: ${language}`);
+      return res.json(questions);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch Q&A questions" });
+      console.error('Error in /api/qa:', error);
+      // Always return an array, even in error cases
+      return res.status(500).json([]);
     }
   });
 
@@ -32,11 +45,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/qa/search/:query", async (req, res) => {
     try {
       const query = req.params.query;
-      const language = req.query.lang as string || 'english';
-      const questions = await storage.searchQAQuestions(query, language);
-      res.json(questions);
+      if (!query) {
+        return res.status(400).json({ message: "Search query is required" });
+      }
+      
+      const language = (req.query.lang as string) || 'english';
+      console.log(`Searching Q&A questions for "${query}" in language: ${language}`);
+      
+      // Ensure we always get an array, even if the storage layer returns undefined
+      let questions = await storage.searchQAQuestions(query, language);
+      
+      // If questions is not an array, log the error and return an empty array
+      if (!Array.isArray(questions)) {
+        console.error('Expected an array of questions but got:', questions);
+        questions = [];
+      }
+      
+      console.log(`Found ${questions.length} matching questions`);
+      return res.json(questions);
     } catch (error) {
-      res.status(500).json({ message: "Failed to search questions" });
+      console.error('Error in /api/qa/search:', error);
+      // Always return an array, even in error cases
+      return res.status(500).json([]);
     }
   });
 

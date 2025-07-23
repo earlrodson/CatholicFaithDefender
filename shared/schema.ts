@@ -2,7 +2,7 @@ import { pgTable, text, serial, integer, boolean, timestamp } from "drizzle-orm/
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const qaQuestions = pgTable("qa_questions", {
+export const qaQuestions = pgTable("questions", {
   id: serial("id").primaryKey(),
   question: text("question").notNull(),
   answer: text("answer").notNull(),

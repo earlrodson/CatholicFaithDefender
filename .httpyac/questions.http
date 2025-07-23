@@ -1,0 +1,31 @@
+@host=http://localhost:5002/api
+
+# Get all questions (defaults to English)
+GET {{host}}/qa
+
+###
+
+# Get questions in a specific language
+GET {{host}}/qa?lang=english
+
+###
+
+# Search questions
+GET {{host}}/qa/search?q=eucharist&lang=english
+
+###
+
+# Get a specific question by ID
+GET {{host}}/qa/1
+
+###
+
+# Create a new question (example POST request)
+POST {{host}}/qa
+Content-Type: application/json
+{
+  "question": "What is the Catholic teaching on the Eucharist?",
+  "answer": "Catholics believe in the Real Presence of Christ in the Eucharist.",
+  "language": "english",
+  "category": "Sacraments"
+}
