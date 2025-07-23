@@ -9,6 +9,12 @@ export const qaQuestions = pgTable("questions", {
   fullAnswer: text("full_answer"),
   category: text("category"),
   language: text("language").notNull().default("english"),
+  subjectOverview: text("subject_overview"),
+  etymology: text("etymology"),
+  churchDocuments: text("church_documents"),
+  scriptureSupport: text("scripture_support"),
+  earlyChurchFathers: text("early_church_fathers"),
+  summaryPoints: text("summary_points"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
